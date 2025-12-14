@@ -25,11 +25,20 @@ export interface IBuyer {
 export interface IOrder {
     items: string[];
     payment: 'card' | 'cash';
-    total: string;
+    total: number;
     address: string;
     email: string;
     phone: string;
 }
 
+export interface IApiProductsResponse {
+    items: IProduct[];
+    total?: number;
+}
+
+export interface IApiOrderResponse {
+    total: number;
+    id?: string;
+}
 
 

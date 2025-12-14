@@ -1,21 +1,5 @@
-import { Api } from '../Api';
-import { IProduct, IOrder } from '../../../types';
-
-/**
- * Интерфейс ответа API при получении списка товаров
- */
-interface IApiProductsResponse {
-    items: IProduct[];
-    total?: number;
-}
-
-/**
- * Интерфейс ответа API при отправке заказа
- */
-interface IApiOrderResponse {
-    total: number;
-    id?: string;
-}
+import { Api } from '../base/Api';
+import { IProduct, IOrder, IApiProductsResponse, IApiOrderResponse } from '../../types';
 
 /**
  * Сервис для взаимодействия с API (слой коммуникации)

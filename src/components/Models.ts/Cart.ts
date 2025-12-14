@@ -1,14 +1,13 @@
-import { IProduct } from "../../../types";
+import { IProduct } from "../../types";
 
 export class Cart {
     private items: IProduct[]; // товары, добавленные в корзину
 
     /**
      * Конструктор класса Cart
-     * @param items - массив товаров (по умолчанию пустой)
      */
-    constructor(items: IProduct[] = []) {
-        this.items = items;
+    constructor() {
+        this.items = [];
     }
 
     setItems(items: IProduct[]): void {
