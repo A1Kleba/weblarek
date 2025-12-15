@@ -55,18 +55,13 @@ export class CustomerModel {
      * Проверяет валидность каждого поля покупателя
      * @returns объект с флагами валидности каждого поля
      */
-    validate(): {
-        payment?: string;
-        email?: string;
-        phone?: string;
-        address?: string;
-    } {
-        const errors: {
-            payment?: string;
-            email?: string;
-            phone?: string;
-            address?: string;
-        } = {};
+    validate(): Record<keyof IBuyer, string | undefined> {
+        const errors: Record<keyof IBuyer, string | undefined> = {
+            payment: undefined,
+            email: undefined,
+            phone: undefined,
+            address: undefined,
+        };
 
         if (!this.payment || this.payment.trim().length === 0) {
             errors.payment = 'Способ оплаты не указан';
@@ -84,7 +79,6 @@ export class CustomerModel {
             errors.phone = 'Номер телефона должен содержать не менее 10 символов';
         }
 
-
         if (!this.address) {
             errors.address = 'Адрес не указан';
         } else if (this.address.length <= 5) {
@@ -93,12 +87,13 @@ export class CustomerModel {
 
         return errors;
     }
-        /**
-         * Проверяет общую валидность данных покупателя
-         * @returns true, если все поля валидны
-         */
-        isValid(): boolean {
-            const errors = this.validate();
-            return Object.keys(errors).length === 0;
-        }
+
+    /**
+     * Проверяет общую валидность данных покупателя
+     * @returns true, если все поля валидны
+     */
+    isValid(): boolean {
+        const errors = this.validate();
+        return Object.keys(errors).length === 0;
     }
+}

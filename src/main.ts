@@ -3,6 +3,9 @@ import { Cart } from "./components/Models.ts/Cart";
 import { ProductCatalogModel } from "./components/Models.ts/ProductCatalog";
 import { CustomerModel } from "./components/Models.ts/Customer";
 import { apiProducts } from "./utils/data";
+import { API_URL } from './utils/constants';
+import { CommunicationService } from "./components/Models.ts/ApiModels";
+import { Api } from "./components/base/Api";
 
 /*Тестирование методов модели данных корзины*/
 const cartItem = new Cart();
@@ -75,3 +78,36 @@ if (!isValid) {
 
 customerItem.clear();
 console.log('После очистки:', customerItem.getData());
+
+async function testProductFetch() {
+    try {
+        const api = new Api(API_URL);
+        const communicationService = new CommunicationService(api);
+
+        const products = await communicationService.getProductList();
+
+        console.log(`получено ${products.length} товаров:`);
+        console.log(products);
+
+        const catalog = new ProductCatalogModel();
+        catalog.setProducts(products);
+
+        const modelProducts = catalog.getProducts();
+        console.log(`В модели хранится ${modelProducts.length} товаров:`);
+        console.log(modelProducts);
+
+        const testId = '854cef69-976d-4c2a-a18c-2aa45046c390';
+        const foundProduct = catalog.getProductById(testId);
+
+        if (foundProduct) {
+            console.log(`Найден товар с ID ${testId}:`, foundProduct.title);
+        } else {
+            console.log(`Товар с ID ${testId} не найден`);
+        }
+
+    } catch (error) {
+        console.error('Ошибка при получении товаров:', error);
+    }
+}
+
+testProductFetch().catch(console.error);
